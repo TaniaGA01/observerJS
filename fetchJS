@@ -1,0 +1,22 @@
+fetch('https://api.example.com/data', {
+  method: 'POST',  // Cambiamos el método a POST
+  headers: {
+    'Content-Type': 'application/json',  // Especificamos que enviamos JSON
+  },
+  body: JSON.stringify({
+    name: 'Juan',
+    age: 30,
+  })
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error en la solicitud');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Respuesta del servidor:', data);
+  })
+  .catch(error => {
+    console.error('Hubo un problema con la solicitud:', error);
+  });
