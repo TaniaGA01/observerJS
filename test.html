@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+<span id="mySpan">Texto inicial</span>
+
+<input type="number" data="vote-group">
+<input type="number" data="vote-group">
+
+<span id="total"></span>
+
+<script>
+  const spanElement = document.getElementById('mySpan');
+  const inputs = Array.from(document.querySelectorAll('input[data="vote-group"]'));
+  const total = document.getElementById('total');
+
+  // Función que quieres ejecutar cuando cambie el contenido del span
+  function handleTextContentChange() {
+    
+    if(inputs.find(input => input.value >= 1 && input.value <= 20)){
+        let totalGroupValuesCollection = 0;
+        inputs.forEach( input => {
+            totalGroupValuesCollection += Number(input.value)
+        });
+        total.innerHTML = String((totalGroupValuesCollection + Number(spanElement.textContent)) / 3)
+    }else{
+        console.log('paila')
+    }
+  }
+
+  // Crear el observador
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+      if (mutation.type === 'childList') {
+        handleTextContentChange();
+      }
+    });
+  });
+
+  // Configurar el observador para observar cambios en los nodos hijos (el contenido del span)
+  observer.observe(spanElement, {
+    childList: true // Observar cambios en el contenido (nodos hijos)
+  });
+
+  setTimeout(() => {
+    spanElement.textContent = '22';
+  }, 8000);
+</script>
+
+</body>
+
+</html>
